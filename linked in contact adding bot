@@ -1,0 +1,42 @@
+
+Marie-Line Ferron <ferron.ml@gmail.com>
+mer. 10 avr. 13:25 (il y a 21 heures)
+À moi
+
+var countOfPagesScrolled = 5;
+
+function scrollDown(height, countOfPagesScrolled){
+    scroll(0, document.body.clientHeight);
+    setTimeout(function(){
+        if(height != document.body.clientHeight && countOfPagesScrolled > 0){
+            scrollDown(document.body.clientHeight, --countOfPagesScrolled);
+        }else
+            return sendRequest();
+    }, 1500);
+}
+
+function sendRequest(){
+    addPeople();
+}
+
+scrollDown(document.body.clientHeight, countOfPagesScrolled);
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  // I've put our main code into this function.
+  async function addPeople() {
+    ul = $('ul.js-discover-entity-list__pymk')[0];
+    firstLi = ul.querySelector('li');
+    count = 0; // this is the count of how many people you've added
+    while(firstLi && count < 100){ // <= modifier le nombre de contacts à ajouter ici
+      buttonToClick = firstLi.querySelector(".js-discover-person-card__action-btn");
+      // make sure that this button contains the text "Connect"
+        buttonToClick.click();
+        count += 1;
+        console.log("I have added " + count + " people so far.");
+      ul.removeChild(firstLi);
+      await sleep(1000); // stop this function for 1 second here.
+      firstLi = ul.querySelector('li');
+    }
+  }
